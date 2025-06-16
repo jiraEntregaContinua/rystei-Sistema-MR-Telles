@@ -1,0 +1,118 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #EDE0D4;
+}
+
+.navbar {
+    background-color: #343a40;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 0;
+}
+
+.input-group, .btn-group {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+#calendar {
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .input-group, .btn-group {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .btn-group .btn {
+        font-size: 0.9rem;
+    }
+
+    .card-body {
+        padding: 10px;
+    }
+
+    #calendar {
+        font-size: 0.8rem;
+        margin-top: 10px;
+    }
+
+    .fc-header-toolbar {
+        flex-wrap: wrap;
+    }
+
+
+    .fc-toolbar .fc-right {
+        display: none;
+    }
+}
+
+
+@media (min-width: 769px) and (max-width: 1200px) {
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+
+    .input-group, .btn-group {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+
+    .card-body {
+        padding: 15px; 
+    }
+
+    #calendar {
+        font-size: 0.9rem;
+        margin-top: 15px;
+    }
+
+    .fc-toolbar .fc-right {
+        display: none;
+    }
+}
+
+
+@media (min-width: 1201px) {
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+
+    .input-group, .btn-group {
+        width: auto;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    #calendar {
+        font-size: 1rem;
+        margin-top: 20px;
+    }
+
+    .fc-toolbar .fc-right {
+        display: block;
+    }
+}

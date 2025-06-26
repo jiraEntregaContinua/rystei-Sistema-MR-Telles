@@ -1,47 +1,63 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up()
     {
-        // 1) Alterar a tabela controle_financeiro
-        Schema::table('controle_financeiro', function (Blueprint $table) {
-            // Remove a foreign key existente (depende do nome que foi gerado no schema)
-            $table->dropForeign(['cliente_id']);
+        // Alterar controle_financeiro
+        if (Schema::hasColumn('controle_financeiro', 'cliente_id')) {
+            Schema::table('controle_financeiro', function (Blueprint $table) {
+                $table->dropForeign(['cliente_id']);
+                $table->renameColumn('cliente_id', 'user_id');
+            });
 
-            // Renomeia a coluna cliente_id para user_id
-            $table->renameColumn('cliente_id', 'user_id');
+            Schema::table('controle_financeiro', function (Blueprint $table) {
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
 
-            // Cria a nova foreign key apontando para a tabela users
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        });
+        // Alterar parcelas
+        if (Schema::hasColumn('parcelas', 'cliente_id')) {
+            Schema::table('parcelas', function (Blueprint $table) {
+                $table->dropForeign(['cliente_id']);
+                $table->renameColumn('cliente_id', 'user_id');
+            });
 
-        // 2) Alterar a tabela parcelas
-        Schema::table('parcelas', function (Blueprint $table) {
-            $table->dropForeign(['cliente_id']);
-            $table->renameColumn('cliente_id', 'user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        });
+            Schema::table('parcelas', function (Blueprint $table) {
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
     }
 
     public function down()
     {
-        // Reverte as mudanças, caso seja necessário dar rollback
-        Schema::table('controle_financeiro', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->renameColumn('user_id', 'cliente_id');
-            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
-        });
+        // Reverter controle_financeiro
+        if (Schema::hasColumn('controle_financeiro', 'user_id')) {
+            Schema::table('controle_financeiro', function (Blueprint $table) {
+                $table->dropForeign(['user_id']);
+                $table->renameColumn('user_id', 'cliente_id');
+            });
 
-        Schema::table('parcelas', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->renameColumn('user_id', 'cliente_id');
-            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
-        });
+            Schema::table('controle_financeiro', function (Blueprint $table) {
+                $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+            });
+        }
+
+        // Reverter parcelas
+        if (Schema::hasColumn('parcelas', 'user_id')) {
+            Schema::table('parcelas', function (Blueprint $table) {
+                $table->dropForeign(['user_id']);
+                $table->renameColumn('user_id', 'cliente_id');
+            });
+
+            Schema::table('parcelas', function (Blueprint $table) {
+                $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+            });
+        }
     }
 };
 

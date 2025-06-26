@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('telefone', 20);
             $table->timestamps(); // created_at e updated_at
         });
-        
     }
     
 };

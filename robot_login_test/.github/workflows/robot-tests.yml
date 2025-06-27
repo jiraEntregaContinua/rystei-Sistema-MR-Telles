@@ -1,0 +1,31 @@
+name: Testes com Robot Framework
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  robot-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Instalar dependências Python
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-pip
+        pip3 install robotframework selenium robotframework-seleniumlibrary
+
+    - name: Instalar Chrome e Chromedriver
+      run: |
+        sudo apt-get install -y chromium-browser chromium-chromedriver
+        sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+
+    - name: Subir servidor Laravel
+      run: php artisan serve --host=0.0.0.0 --port=8000 &
+
+    - name: Rodar testes Robot Framework
+      run: robot tests/robot/suites

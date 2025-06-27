@@ -9,9 +9,7 @@ ${SENHA}        123456
 
 *** Test Cases ***
 Teste Cadastro Usuário
-    ${options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
-    Create WebDriver    Chrome    options=${options}   # Sem service e sem caminho do chromedriver
-    Go To    ${URL}
+    Open Browser    ${URL}    Chrome
     Input Text    id=name    ${NOME}
     Input Text    id=email    ${EMAIL}
     Input Text    id=password    ${SENHA}

@@ -1,4 +1,4 @@
-name: Testes Laravel
+name: Testes com Robot Framework
 
 on:
   push:
@@ -7,64 +7,26 @@ on:
     branches: [main]
 
 jobs:
-  laravel-tests:
+  robot-tests:
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_DATABASE: laravel
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_USER: laravel
-          MYSQL_PASSWORD: secret
-        # Removido 'ports' para evitar conflitos
-        options: >-
-          --health-cmd="mysqladmin ping --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
 
     steps:
-    - name: Clonar repositório
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-    - name: Instalar PHP e Composer
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.2'
-        extensions: mbstring, bcmath, pdo, pdo_mysql, dom, fileinfo
-        coverage: none
-
-    - name: Instalar dependências PHP
-      run: composer install --no-interaction --prefer-dist --optimize-autoloader
-
-    - name: Copiar .env.example
-      run: cp .env.example .env
-
-    - name: Gerar chave do Laravel
-      run: php artisan key:generate
-
-    - name: Esperar o MySQL estar pronto
+    - name: Instalar dependências Python
       run: |
-        echo "Aguardando o MySQL iniciar..."
-        for i in {1..30}; do
-          if mysql -h mysql -u laravel -psecret -e "SELECT 1" &> /dev/null; then
-            echo "✅ MySQL está pronto!"
-            break
-          fi
-          echo "⏳ Ainda aguardando..."
-          sleep 2
-        done
+        sudo apt-get update
+        sudo apt-get install -y python3-pip
+        pip3 install robotframework selenium robotframework-seleniumlibrary
 
-    - name: Rodar migrations
-      env:
-        DB_CONNECTION: mysql
-        DB_HOST: mysql
-        DB_PORT: 3306
-        DB_DATABASE: laravel
-        DB_USERNAME: laravel
-        DB_PASSWORD: secret
-      run: php artisan migrate:fresh --force
+    - name: Instalar Chrome e Chromedriver
+      run: |
+        sudo apt-get install -y chromium-browser chromium-chromedriver
+        sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
 
-    - name: Rodar testes (nenhum por enquanto)
-      run: php artisan test || echo "Nenhum teste implementado ainda"
+    - name: Subir servidor Laravel
+      run: php artisan serve --host=0.0.0.0 --port=8000 &
+
+    - name: Rodar testes Robot Framework
+      run: robot robot_login_test/tests/robot/suites
+

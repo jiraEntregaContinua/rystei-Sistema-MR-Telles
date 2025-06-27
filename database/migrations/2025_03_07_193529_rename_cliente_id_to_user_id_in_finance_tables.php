@@ -1,87 +1,47 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up()
     {
-        if (Schema::hasColumn('controle_financeiro', 'cliente_id')) {
-            try {
-                Schema::table('controle_financeiro', function (Blueprint $table) {
-                    // Aqui droppa a foreign key pelo nome dela (ajuste para o nome real)
-                    $table->dropForeign('controle_financeiro_cliente_id_foreign');
-                });
-            } catch (\Exception $e) {
-                // Constraint não existe, ignora o erro
-            }
+        // 1) Alterar a tabela controle_financeiro
+        Schema::table('controle_financeiro', function (Blueprint $table) {
+            // Remove a foreign key existente (depende do nome que foi gerado no schema)
+            $table->dropForeign(['cliente_id']);
 
-            Schema::table('controle_financeiro', function (Blueprint $table) {
-                $table->renameColumn('cliente_id', 'user_id');
-            });
+            // Renomeia a coluna cliente_id para user_id
+            $table->renameColumn('cliente_id', 'user_id');
 
-            Schema::table('controle_financeiro', function (Blueprint $table) {
-                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            });
-        }
+            // Cria a nova foreign key apontando para a tabela users
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
 
-        // Repetir o mesmo para parcelas
-        if (Schema::hasColumn('parcelas', 'cliente_id')) {
-            try {
-                Schema::table('parcelas', function (Blueprint $table) {
-                    $table->dropForeign('parcelas_cliente_id_foreign');
-                });
-            } catch (\Exception $e) {
-                // Constraint não existe, ignora o erro
-            }
-
-            Schema::table('parcelas', function (Blueprint $table) {
-                $table->renameColumn('cliente_id', 'user_id');
-            });
-
-            Schema::table('parcelas', function (Blueprint $table) {
-                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            });
-        }
+        // 2) Alterar a tabela parcelas
+        Schema::table('parcelas', function (Blueprint $table) {
+            $table->dropForeign(['cliente_id']);
+            $table->renameColumn('cliente_id', 'user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
     }
 
     public function down()
     {
-        // Idem para o down, com try/catch na remoção das foreign keys
-        if (Schema::hasColumn('controle_financeiro', 'user_id')) {
-            try {
-                Schema::table('controle_financeiro', function (Blueprint $table) {
-                    $table->dropForeign('controle_financeiro_user_id_foreign');
-                });
-            } catch (\Exception $e) {
-            }
+        // Reverte as mudanças, caso seja necessário dar rollback
+        Schema::table('controle_financeiro', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->renameColumn('user_id', 'cliente_id');
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+        });
 
-            Schema::table('controle_financeiro', function (Blueprint $table) {
-                $table->renameColumn('user_id', 'cliente_id');
-            });
-
-            Schema::table('controle_financeiro', function (Blueprint $table) {
-                $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
-            });
-        }
-
-        if (Schema::hasColumn('parcelas', 'user_id')) {
-            try {
-                Schema::table('parcelas', function (Blueprint $table) {
-                    $table->dropForeign('parcelas_user_id_foreign');
-                });
-            } catch (\Exception $e) {
-            }
-
-            Schema::table('parcelas', function (Blueprint $table) {
-                $table->renameColumn('user_id', 'cliente_id');
-            });
-
-            Schema::table('parcelas', function (Blueprint $table) {
-                $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
-            });
-        }
+        Schema::table('parcelas', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->renameColumn('user_id', 'cliente_id');
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+        });
     }
 };
+

@@ -17,8 +17,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_USER: laravel
           MYSQL_PASSWORD: secret
-        ports:
-          - 3306:3306
+        # Removido 'ports' para evitar conflitos
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
@@ -45,15 +44,25 @@ jobs:
     - name: Gerar chave do Laravel
       run: php artisan key:generate
 
+    - name: Esperar o MySQL ficar pronto
+      run: |
+        for i in {30..0}; do
+          if mysqladmin ping -h mysql -u laravel -psecret --silent; then
+            echo "MySQL está pronto!"
+            break
+          fi
+          echo 'Aguardando MySQL iniciar...'
+          sleep 1
+        done
+
     - name: Rodar migrations
       env:
         DB_CONNECTION: mysql
-        DB_HOST: mysql      # Nome do serviço declarado no jobs.services.mysql
+        DB_HOST: mysql
         DB_PORT: 3306
         DB_DATABASE: laravel
         DB_USERNAME: laravel
         DB_PASSWORD: secret
-
       run: php artisan migrate:fresh --force
 
     - name: Rodar testes (nenhum por enquanto)

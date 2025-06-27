@@ -3,38 +3,35 @@ name: Robot Framework Tests
 on:
   push:
     branches:
-      - feature/testes-robot
       - develop
-      - main
+      - feature/testes-robot
 
 jobs:
-  test:
+  robot-tests:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
+      - uses: actions/checkout@v3
+      
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: 3.11
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install robotframework robotframework-seleniumlibrary selenium
 
-      - name: Install Chrome
+      - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
         with:
-          chrome-version: 'latest'
+          chrome-version: latest
 
-      - name: Install ChromeDriver
+      - name: Setup ChromeDriver
         uses: nanasess/setup-chromedriver@v1
         with:
-          chromedriver-version: 'latest'
+          chromedriver-version: latest
 
       - name: Run Robot Framework tests
-        run: |
-          robot cadastro.robot
+        run: robot cadastro.robot

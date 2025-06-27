@@ -1,71 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.1 (Python 3.10.6 on win32)" generated="2025-06-27T11:54:47.712343" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.1 (Python 3.10.6 on win32)" generated="2025-06-27T11:56:25.026901" rpa="false" schemaversion="5">
 <suite id="s1" name="Cadastro" source="D:\facul\estagio\rystei-Sistema-MR-Telles\cadastro.robot">
 <test id="s1-t1" name="Teste Cadastro Usuário" line="12">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-06-27T11:56:25.419745" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x000001EF81E80670&gt;</msg>
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-06-27T11:56:25.419745" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-06-27T11:56:25.421722" level="INFO">${service} = &lt;selenium.webdriver.chrome.service.Service object at 0x000001EF81E80880&gt;</msg>
+<var>${service}</var>
+<arg>sys.modules['selenium.webdriver.chrome.service'].Service(executable_path=r'''${CHROMEDRIVER}''')</arg>
+<arg>sys, selenium.webdriver.chrome.service</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-06-27T11:56:25.420820" elapsed="0.000902"/>
+</kw>
 <kw name="Create Webdriver" owner="SeleniumLibrary">
-<msg time="2025-06-27T11:54:48.091591" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<msg time="2025-06-27T11:56:25.422722" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
 <arg>Chrome</arg>
+<arg>options=${options}</arg>
+<arg>service=${service}</arg>
 <doc>Creates an instance of Selenium WebDriver.</doc>
-<status status="PASS" start="2025-06-27T11:54:48.090580" elapsed="7.275737"/>
+<status status="PASS" start="2025-06-27T11:56:25.421722" elapsed="1.172872"/>
 </kw>
 <kw name="Go To" owner="SeleniumLibrary">
-<msg time="2025-06-27T11:54:55.367318" level="INFO">Opening url 'http://localhost:8000/register'</msg>
+<msg time="2025-06-27T11:56:26.594594" level="INFO">Opening url 'http://localhost:8000/register'</msg>
 <arg>${URL}</arg>
 <doc>Navigates the current browser window to the provided ``url``.</doc>
-<status status="PASS" start="2025-06-27T11:54:55.367318" elapsed="0.596084"/>
+<status status="PASS" start="2025-06-27T11:56:26.594594" elapsed="0.564385"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-06-27T11:54:55.965401" level="INFO">Typing text 'Test User' into text field 'id=name'.</msg>
+<msg time="2025-06-27T11:56:27.159980" level="INFO">Typing text 'Test User' into text field 'id=name'.</msg>
 <arg>id=name</arg>
 <arg>${NOME}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-06-27T11:54:55.964402" elapsed="0.088822"/>
+<status status="PASS" start="2025-06-27T11:56:27.159980" elapsed="0.082134"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-06-27T11:54:56.053224" level="INFO">Typing text 'testuser@example.com' into text field 'id=email'.</msg>
+<msg time="2025-06-27T11:56:27.243115" level="INFO">Typing text 'testuser@example.com' into text field 'id=email'.</msg>
 <arg>id=email</arg>
 <arg>${EMAIL}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-06-27T11:54:56.053224" elapsed="0.085642"/>
+<status status="PASS" start="2025-06-27T11:56:27.243115" elapsed="0.079932"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-06-27T11:54:56.139870" level="FAIL">Keyword 'SeleniumLibrary.Input Text' expected 2 to 3 arguments, got 1.</msg>
-<arg>id=password ${SENHA}</arg>
+<msg time="2025-06-27T11:56:27.323047" level="INFO">Typing text '123456' into text field 'id=password'.</msg>
+<arg>id=password</arg>
+<arg>${SENHA}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="FAIL" start="2025-06-27T11:54:56.139870" elapsed="0.000000">Keyword 'SeleniumLibrary.Input Text' expected 2 to 3 arguments, got 1.</status>
+<status status="PASS" start="2025-06-27T11:56:27.323047" elapsed="0.070208"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-27T11:56:27.394255" level="INFO">Typing text '123456' into text field 'id=password_confirmation'.</msg>
 <arg>id=password_confirmation</arg>
 <arg>${SENHA}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="NOT RUN" start="2025-06-27T11:54:56.140877" elapsed="0.000000"/>
+<status status="PASS" start="2025-06-27T11:56:27.394255" elapsed="0.067324"/>
 </kw>
 <kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-06-27T11:56:27.462579" level="INFO">Clicking button 'xpath=//button[contains(text(),'Cadastrar')]'.</msg>
 <arg>xpath=//button[contains(text(),'Cadastrar')]</arg>
 <doc>Clicks the button identified by ``locator``.</doc>
-<status status="NOT RUN" start="2025-06-27T11:54:56.140877" elapsed="0.000000"/>
+<status status="PASS" start="2025-06-27T11:56:27.462579" elapsed="0.076526"/>
 </kw>
 <kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-06-27T11:56:28.300640" level="INFO">Current page contains text 'Cadastro'.</msg>
 <arg>Cadastro</arg>
 <doc>Verifies that current page contains ``text``.</doc>
-<status status="NOT RUN" start="2025-06-27T11:54:56.140877" elapsed="0.000000"/>
+<status status="PASS" start="2025-06-27T11:56:27.540106" elapsed="0.760534"/>
 </kw>
 <kw name="Close Browser" owner="SeleniumLibrary">
 <doc>Closes the current browser.</doc>
-<status status="NOT RUN" start="2025-06-27T11:54:56.140877" elapsed="0.000000"/>
+<status status="PASS" start="2025-06-27T11:56:28.301651" elapsed="2.157969"/>
 </kw>
-<status status="FAIL" start="2025-06-27T11:54:48.089579" elapsed="8.052298">Keyword 'SeleniumLibrary.Input Text' expected 2 to 3 arguments, got 1.</status>
+<status status="PASS" start="2025-06-27T11:56:25.417797" elapsed="5.041823"/>
 </test>
-<status status="FAIL" start="2025-06-27T11:54:47.715354" elapsed="8.427511"/>
+<status status="PASS" start="2025-06-27T11:56:25.026901" elapsed="5.434723"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1" skip="0">All Tests</stat>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat name="Cadastro" id="s1" pass="0" fail="1" skip="0">Cadastro</stat>
+<stat name="Cadastro" id="s1" pass="1" fail="0" skip="0">Cadastro</stat>
 </suite>
 </statistics>
 <errors>

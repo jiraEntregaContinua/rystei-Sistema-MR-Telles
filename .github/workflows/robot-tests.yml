@@ -1,0 +1,32 @@
+name: Robot Framework Tests
+
+on:
+  push:
+    branches:
+      - develop
+      - feature/testes-robot
+
+jobs:
+  robot-tests:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install robotframework robotframework-seleniumlibrary selenium webdriver-manager
+
+      - name: Setup ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+        with:
+          chromedriver-version: latest
+
+      - name: Run Robot Framework tests
+        run: robot cadastro.robot

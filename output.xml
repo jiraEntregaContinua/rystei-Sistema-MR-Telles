@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.1 (Python 3.10.6 on win32)" generated="2025-06-27T12:12:27.104453" rpa="false" schemaversion="5">
+<suite id="s1" name="Cadastro" source="D:\facul\estagio\rystei-Sistema-MR-Telles\cadastro.robot">
+<test id="s1-t1" name="Teste Cadastro Usuário" line="11">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-06-27T12:12:27.511043" level="INFO">Opening browser 'Chrome' to base url 'http://localhost:8000/register'.</msg>
+<arg>${URL}</arg>
+<arg>Chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-06-27T12:12:27.511043" elapsed="1.813629"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-27T12:12:29.325672" level="INFO">Typing text 'Test User' into text field 'id=name'.</msg>
+<arg>id=name</arg>
+<arg>${NOME}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-27T12:12:29.325672" elapsed="0.083616"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-27T12:12:29.410287" level="INFO">Typing text 'testuser@example.com' into text field 'id=email'.</msg>
+<arg>id=email</arg>
+<arg>${EMAIL}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-27T12:12:29.410287" elapsed="0.078155"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-27T12:12:29.489442" level="INFO">Typing text '123456' into text field 'id=password'.</msg>
+<arg>id=password</arg>
+<arg>${SENHA}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-27T12:12:29.489442" elapsed="0.066699"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-27T12:12:29.557141" level="INFO">Typing text '123456' into text field 'id=password_confirmation'.</msg>
+<arg>id=password_confirmation</arg>
+<arg>${SENHA}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-27T12:12:29.556141" elapsed="0.068697"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-06-27T12:12:29.624838" level="INFO">Clicking button 'xpath=//button[contains(text(),'Cadastrar')]'.</msg>
+<arg>xpath=//button[contains(text(),'Cadastrar')]</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-27T12:12:29.624838" elapsed="0.077118"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-06-27T12:12:30.322036" level="INFO">Current page contains text 'Cadastro'.</msg>
+<arg>Cadastro</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-06-27T12:12:29.701956" elapsed="0.620080"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-06-27T12:12:30.322036" elapsed="2.122952"/>
+</kw>
+<status status="PASS" start="2025-06-27T12:12:27.509609" elapsed="4.935684"/>
+</test>
+<status status="PASS" start="2025-06-27T12:12:27.106443" elapsed="5.340415"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Cadastro" id="s1" pass="1" fail="0" skip="0">Cadastro</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

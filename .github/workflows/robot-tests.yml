@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -28,10 +28,18 @@ jobs:
         with:
           chrome-version: latest
 
+      - name: Get Chromium major version
+        id: get_chrome_version
+        run: |
+          CHROME_VER=$(/opt/hostedtoolcache/setup-chrome/chromium/*/x64/chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+')
+          echo "Full Chrome Version: $CHROME_VER"
+          MAJOR_VER=$(echo $CHROME_VER | cut -d '.' -f 1)
+          echo "major_version=$MAJOR_VER" >> $GITHUB_OUTPUT
+
       - name: Setup ChromeDriver
         uses: nanasess/setup-chromedriver@v1
         with:
-          chromedriver-version: latest
+          chromedriver-version: ${{ steps.get_chrome_version.outputs.major_version }}
 
       - name: Run Robot Framework tests
         run: robot cadastro.robot

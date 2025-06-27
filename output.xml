@@ -1,93 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.1 (Python 3.10.6 on win32)" generated="2025-06-27T11:38:59.138528" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.1 (Python 3.10.6 on win32)" generated="2025-06-27T11:54:47.712343" rpa="false" schemaversion="5">
 <suite id="s1" name="Cadastro" source="D:\facul\estagio\rystei-Sistema-MR-Telles\cadastro.robot">
 <test id="s1-t1" name="Teste Cadastro Usuário" line="12">
-<kw name="Evaluate" owner="BuiltIn">
-<msg time="2025-06-27T11:38:59.504415" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x0000023B36360670&gt;</msg>
-<var>${options}</var>
-<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
-<arg>sys, selenium.webdriver</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<status status="PASS" start="2025-06-27T11:38:59.504415" elapsed="0.000000"/>
-</kw>
-<kw name="Evaluate" owner="BuiltIn">
-<msg time="2025-06-27T11:38:59.505403" level="INFO">${service} = &lt;selenium.webdriver.chrome.service.Service object at 0x0000023B36360880&gt;</msg>
-<var>${service}</var>
-<arg>sys.modules['selenium.webdriver.chrome.service'].Service(executable_path=r'''${CHROMEDRIVER}''')</arg>
-<arg>sys, selenium.webdriver.chrome.service</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<status status="PASS" start="2025-06-27T11:38:59.505403" elapsed="0.001081"/>
-</kw>
 <kw name="Create Webdriver" owner="SeleniumLibrary">
-<msg time="2025-06-27T11:38:59.506484" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<msg time="2025-06-27T11:54:48.091591" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
 <arg>Chrome</arg>
-<arg>options=${options}</arg>
-<arg>service=${service}</arg>
 <doc>Creates an instance of Selenium WebDriver.</doc>
-<status status="PASS" start="2025-06-27T11:38:59.506484" elapsed="1.128481"/>
+<status status="PASS" start="2025-06-27T11:54:48.090580" elapsed="7.275737"/>
 </kw>
 <kw name="Go To" owner="SeleniumLibrary">
-<msg time="2025-06-27T11:39:00.634965" level="INFO">Opening url 'http://localhost:8000/register'</msg>
+<msg time="2025-06-27T11:54:55.367318" level="INFO">Opening url 'http://localhost:8000/register'</msg>
 <arg>${URL}</arg>
 <doc>Navigates the current browser window to the provided ``url``.</doc>
-<status status="PASS" start="2025-06-27T11:39:00.634965" elapsed="0.588388"/>
+<status status="PASS" start="2025-06-27T11:54:55.367318" elapsed="0.596084"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-06-27T11:39:01.224353" level="INFO">Typing text 'Test User' into text field 'id=name'.</msg>
+<msg time="2025-06-27T11:54:55.965401" level="INFO">Typing text 'Test User' into text field 'id=name'.</msg>
 <arg>id=name</arg>
 <arg>${NOME}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-06-27T11:39:01.223353" elapsed="0.085018"/>
+<status status="PASS" start="2025-06-27T11:54:55.964402" elapsed="0.088822"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-06-27T11:39:01.309371" level="INFO">Typing text 'testuser@example.com' into text field 'id=email'.</msg>
+<msg time="2025-06-27T11:54:56.053224" level="INFO">Typing text 'testuser@example.com' into text field 'id=email'.</msg>
 <arg>id=email</arg>
 <arg>${EMAIL}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-06-27T11:39:01.308371" elapsed="0.078759"/>
+<status status="PASS" start="2025-06-27T11:54:56.053224" elapsed="0.085642"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-06-27T11:39:01.388131" level="INFO">Typing text '123456' into text field 'id=password'.</msg>
-<arg>id=password</arg>
-<arg>${SENHA}</arg>
+<msg time="2025-06-27T11:54:56.139870" level="FAIL">Keyword 'SeleniumLibrary.Input Text' expected 2 to 3 arguments, got 1.</msg>
+<arg>id=password ${SENHA}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-06-27T11:39:01.387130" elapsed="0.067158"/>
+<status status="FAIL" start="2025-06-27T11:54:56.139870" elapsed="0.000000">Keyword 'SeleniumLibrary.Input Text' expected 2 to 3 arguments, got 1.</status>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-06-27T11:39:01.455288" level="INFO">Typing text '123456' into text field 'id=password_confirmation'.</msg>
 <arg>id=password_confirmation</arg>
 <arg>${SENHA}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-06-27T11:39:01.454288" elapsed="0.068267"/>
+<status status="NOT RUN" start="2025-06-27T11:54:56.140877" elapsed="0.000000"/>
 </kw>
 <kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2025-06-27T11:39:01.522555" level="INFO">Clicking button 'xpath=//button[contains(text(),'Cadastrar')]'.</msg>
 <arg>xpath=//button[contains(text(),'Cadastrar')]</arg>
 <doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2025-06-27T11:39:01.522555" elapsed="0.709049"/>
+<status status="NOT RUN" start="2025-06-27T11:54:56.140877" elapsed="0.000000"/>
 </kw>
 <kw name="Page Should Contain" owner="SeleniumLibrary">
-<msg time="2025-06-27T11:39:02.246608" level="INFO">Current page contains text 'Cadastro'.</msg>
 <arg>Cadastro</arg>
 <doc>Verifies that current page contains ``text``.</doc>
-<status status="PASS" start="2025-06-27T11:39:02.231604" elapsed="0.015004"/>
+<status status="NOT RUN" start="2025-06-27T11:54:56.140877" elapsed="0.000000"/>
 </kw>
 <kw name="Close Browser" owner="SeleniumLibrary">
 <doc>Closes the current browser.</doc>
-<status status="PASS" start="2025-06-27T11:39:02.246608" elapsed="2.131471"/>
+<status status="NOT RUN" start="2025-06-27T11:54:56.140877" elapsed="0.000000"/>
 </kw>
-<status status="PASS" start="2025-06-27T11:38:59.502986" elapsed="4.875093"/>
+<status status="FAIL" start="2025-06-27T11:54:48.089579" elapsed="8.052298">Keyword 'SeleniumLibrary.Input Text' expected 2 to 3 arguments, got 1.</status>
 </test>
-<status status="PASS" start="2025-06-27T11:38:59.140529" elapsed="5.237550"/>
+<status status="FAIL" start="2025-06-27T11:54:47.715354" elapsed="8.427511"/>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="0" skip="0">All Tests</stat>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat name="Cadastro" id="s1" pass="1" fail="0" skip="0">Cadastro</stat>
+<stat name="Cadastro" id="s1" pass="0" fail="1" skip="0">Cadastro</stat>
 </suite>
 </statistics>
 <errors>

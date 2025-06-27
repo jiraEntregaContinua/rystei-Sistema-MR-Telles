@@ -48,11 +48,12 @@ jobs:
     - name: Rodar migrations
       env:
         DB_CONNECTION: mysql
-        DB_HOST: 127.0.0.1
+        DB_HOST: mysql      # Nome do serviço declarado no jobs.services.mysql
         DB_PORT: 3306
         DB_DATABASE: laravel
         DB_USERNAME: laravel
         DB_PASSWORD: secret
+
       run: php artisan migrate:fresh --force
 
     - name: Rodar testes (nenhum por enquanto)

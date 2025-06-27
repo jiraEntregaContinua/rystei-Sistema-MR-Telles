@@ -8,72 +8,25 @@ on:
 
 jobs:
   robot-tests:
-    runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: testdb
-          MYSQL_USER: user
-          MYSQL_PASSWORD: password
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.2
-          extensions: mbstring, pdo, mysql
-
-      - name: Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist
-
-      - name: Prepare Laravel
-        run: |
-          cp .env.example .env
-          php artisan key:generate
-          php artisan migrate --force
-        env:
-          DB_CONNECTION: mysql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
-          DB_DATABASE: testdb
-          DB_USERNAME: user
-          DB_PASSWORD: password
-
-      - name: Start Laravel server
-        run: php artisan serve --host=127.0.0.1 --port=8000 &
-        shell: bash
 
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
 
-      - name: Install Robot dependencies
+      - name: Install dependencies
         run: |
-          pip install robotframework robotframework-seleniumlibrary selenium
-
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
+          python -m pip install --upgrade pip
+          pip install robotframework robotframework-seleniumlibrary selenium webdriver-manager
 
       - name: Setup ChromeDriver
         uses: nanasess/setup-chromedriver@v2
-
-      - name: Wait for Laravel to boot
-        run: |
-          echo "Esperando Laravel subir..."
-          sleep 10
+        with:
+          chromedriver-version: latest
 
       - name: Run Robot Framework tests
         run: robot cadastro.robot

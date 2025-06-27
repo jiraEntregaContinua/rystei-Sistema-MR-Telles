@@ -19,13 +19,10 @@ jobs:
         sudo apt-get install -y python3-pip
         pip3 install robotframework selenium robotframework-seleniumlibrary
 
-    - name: Instalar Chrome e Chromedriver
-      run: |
-        sudo apt-get install -y chromium-browser chromium-chromedriver
-        if [ ! -f /usr/bin/chromedriver ]; then
-          sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
-        fi
-
+        - name: Instalar Chrome e Chromedriver
+          run: |
+            sudo apt-get install -y chromium-browser chromium-chromedriver
+            sudo ln -sf /usr/bin/chromium-browser /usr/bin/google-chrome
 
     - name: Subir servidor Laravel
       run: php artisan serve --host=0.0.0.0 --port=8000 &

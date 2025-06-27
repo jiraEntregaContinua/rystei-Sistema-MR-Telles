@@ -1,4 +1,4 @@
 LOGIN_URL = "http://localhost:8000/login"
-BROWSER = "chrome"
+BROWSER  =  "chromium"
 EMAIL = "standarduser@email.com"
 PASSWORD = "senha123"

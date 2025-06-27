@@ -1,7 +1,7 @@
 *** Settings ***
 Library           SeleniumLibrary
 Resource          ../resources/login_keywords.robot
-Variables         ../variables/common_variables.robot
+Variables         ../variables/common_variables.py
 
 *** Test Cases ***
 Login com sucesso

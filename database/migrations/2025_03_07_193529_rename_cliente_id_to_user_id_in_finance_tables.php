@@ -8,10 +8,17 @@ return new class extends Migration
 {
     public function up()
     {
-        // Alterar controle_financeiro
         if (Schema::hasColumn('controle_financeiro', 'cliente_id')) {
+            try {
+                Schema::table('controle_financeiro', function (Blueprint $table) {
+                    // Aqui droppa a foreign key pelo nome dela (ajuste para o nome real)
+                    $table->dropForeign('controle_financeiro_cliente_id_foreign');
+                });
+            } catch (\Exception $e) {
+                // Constraint não existe, ignora o erro
+            }
+
             Schema::table('controle_financeiro', function (Blueprint $table) {
-                $table->dropForeign(['cliente_id']);
                 $table->renameColumn('cliente_id', 'user_id');
             });
 
@@ -20,10 +27,17 @@ return new class extends Migration
             });
         }
 
-        // Alterar parcelas
+        // Repetir o mesmo para parcelas
         if (Schema::hasColumn('parcelas', 'cliente_id')) {
+            try {
+                Schema::table('parcelas', function (Blueprint $table) {
+                    $table->dropForeign('parcelas_cliente_id_foreign');
+                });
+            } catch (\Exception $e) {
+                // Constraint não existe, ignora o erro
+            }
+
             Schema::table('parcelas', function (Blueprint $table) {
-                $table->dropForeign(['cliente_id']);
                 $table->renameColumn('cliente_id', 'user_id');
             });
 
@@ -35,10 +49,16 @@ return new class extends Migration
 
     public function down()
     {
-        // Reverter controle_financeiro
+        // Idem para o down, com try/catch na remoção das foreign keys
         if (Schema::hasColumn('controle_financeiro', 'user_id')) {
+            try {
+                Schema::table('controle_financeiro', function (Blueprint $table) {
+                    $table->dropForeign('controle_financeiro_user_id_foreign');
+                });
+            } catch (\Exception $e) {
+            }
+
             Schema::table('controle_financeiro', function (Blueprint $table) {
-                $table->dropForeign(['user_id']);
                 $table->renameColumn('user_id', 'cliente_id');
             });
 
@@ -47,10 +67,15 @@ return new class extends Migration
             });
         }
 
-        // Reverter parcelas
         if (Schema::hasColumn('parcelas', 'user_id')) {
+            try {
+                Schema::table('parcelas', function (Blueprint $table) {
+                    $table->dropForeign('parcelas_user_id_foreign');
+                });
+            } catch (\Exception $e) {
+            }
+
             Schema::table('parcelas', function (Blueprint $table) {
-                $table->dropForeign(['user_id']);
                 $table->renameColumn('user_id', 'cliente_id');
             });
 
@@ -60,4 +85,3 @@ return new class extends Migration
         }
     }
 };
-
